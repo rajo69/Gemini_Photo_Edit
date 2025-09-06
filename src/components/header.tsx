@@ -15,9 +15,9 @@ const Header: React.FC<HeaderProps> = ({ onUploadClick }) => {
         </div>
       </div>
       <div className="flex items-center space-x-2">
-        <button className="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg">Demo Mode</button>
-        <button onClick={onUploadClick} className="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg">Upload</button>
-        <button className="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg">Run Self-Tests</button>
+        <button className="bg-secondary hover:bg-primary hover:text-primary-foreground text-secondary-foreground font-bold py-2 px-4 rounded-lg transition-colors">Demo Mode</button>
+        <button onClick={onUploadClick} className="bg-secondary hover:bg-primary hover:text-primary-foreground text-secondary-foreground font-bold py-2 px-4 rounded-lg transition-colors">Upload</button>
+        <button className="bg-secondary hover:bg-primary hover:text-primary-foreground text-secondary-foreground font-bold py-2 px-4 rounded-lg transition-colors">Run Self-Tests</button>
       </div>
     </header>
   );

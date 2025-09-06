@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, MouseEvent } from 'react';
+import { motion } from 'framer-motion';
 import Header from "@/components/header";
 import ImageCanvas from "@/components/image-canvas";
 import PromptInput from "@/components/prompt-input";
@@ -9,7 +10,6 @@ export default function Home() {
   const [image, setImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const mainContainerRef = useRef<HTMLDivElement>(null);
 
   const handleUploadClick = () => {
     fileInputRef.current?.click();
@@ -54,32 +54,46 @@ export default function Home() {
   };
 
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-    if (!mainContainerRef.current) return;
-    const { clientX, clientY, currentTarget } = e;
-    const { offsetWidth, offsetHeight } = currentTarget;
-    const x = (clientX - offsetWidth / 2) / (offsetWidth / 2);
-    const y = (clientY - offsetHeight / 2) / (offsetHeight / 2);
-    mainContainerRef.current.style.setProperty('--x', `${-x * 5}deg`);
-    mainContainerRef.current.style.setProperty('--y', `${y * 5}deg`);
+    const { clientX, clientY } = e;
+    document.documentElement.style.setProperty('--x', `${clientX}px`);
+    document.documentElement.style.setProperty('--y', `${clientY}px`);
   };
 
-
   return (
-    <div
-      className="flex flex-col items-center justify-center min-h-screen bg-transparent text-white p-4 [perspective:800px]"
+    <motion.div
+      className="flex flex-col items-center justify-center min-h-screen bg-transparent text-white p-4 overflow-hidden"
       onMouseMove={handleMouseMove}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
     >
-      <div
-        ref={mainContainerRef}
-        className="w-full max-w-7xl mx-auto transition-transform duration-500 ease-out [transform-style:preserve-3d]"
-        style={{ transform: 'rotateY(var(--x, 0)) rotateX(var(--y, 0))' }}
+      <motion.div
+        className="w-full max-w-7xl mx-auto"
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
       >
         <Header onUploadClick={handleUploadClick} />
-        <main className="flex flex-col items-center mt-4 space-y-4">
+      </motion.div>
+
+      <main className="flex flex-col items-center mt-4 space-y-4">
+        <motion.div
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          whileHover={{ scale: 1.02 }}
+        >
           <ImageCanvas image={image} fileInputRef={fileInputRef} handleFileChange={handleFileChange} loading={loading} />
+        </motion.div>
+        <motion.div
+          className="w-full"
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+        >
           <PromptInput onSubmit={handlePromptSubmit} />
-        </main>
-      </div>
-    </div>
+        </motion.div>
+      </main>
+    </motion.div>
   );
 }

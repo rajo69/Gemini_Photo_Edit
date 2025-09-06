@@ -21,20 +21,20 @@ const ImageCanvas: React.FC<ImageCanvasProps> = ({ image, fileInputRef, handleFi
   };
 
   return (
-    <div className="w-[70vw] h-[70vh] bg-gray-900 rounded-lg flex items-center justify-center relative overflow-hidden">
+    <div className="w-[70vw] h-[70vh] bg-card rounded-lg flex items-center justify-center relative overflow-hidden border border-border shadow-lg">
       <input type="file" ref={fileInputRef} onChange={handleFileChange} className="hidden" accept="image/*" />
       {loading && (
         <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10">
-          <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-white"></div>
+          <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-primary"></div>
         </div>
       )}
       {image ? (
         <Image src={image} alt="edited image" fill className={`object-contain ${loading ? 'opacity-50' : ''}`} />
       ) : (
-        <p className="text-gray-400">Upload an image to start</p>
+        <p className="text-muted-foreground">Upload an image to start</p>
       )}
       {image && (
-        <button onClick={handleDownload} className="absolute top-4 right-4 bg-gray-800 hover:bg-gray-700 text-white font-bold p-2 rounded-full z-10">
+        <button onClick={handleDownload} className="absolute top-4 right-4 bg-secondary hover:bg-primary hover:text-primary-foreground text-secondary-foreground font-bold p-2 rounded-full z-10 transition-colors">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
           </svg>
